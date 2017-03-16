@@ -2,6 +2,14 @@ PATH
   remote: .
   specs:
     core_candidate (0.1.0)
+      core_address
+      pg
+      rails (~> 5.0.2)
+
+PATH
+  remote: components/core_address
+  specs:
+    core_address (0.1.0)
       pg
       rails (~> 5.0.2)
 
@@ -112,6 +120,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  core_address!
   core_candidate!
 
 BUNDLED WITH
