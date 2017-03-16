@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.version     = CoreCandidate::VERSION
   s.authors     = ["Elton Silva"]
   s.email       = ["elton.chrls@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CoreCandidate."
-  s.description = "TODO: Description of CoreCandidate."
+  s.homepage    = "https://github.com/silvaelton/core_candidate.git"
+  s.summary     = "Summary of CoreCandidate."
+  s.description = "Description of CoreCandidate."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.0.2"
+  s.add_dependency "pg"
 
-  s.add_development_dependency "sqlite3"
 end
