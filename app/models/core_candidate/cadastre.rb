@@ -12,6 +12,8 @@ module CoreCandidate
     belongs_to :program
     belongs_to :work_city, class_name: "Address::City"
 
+    has_many :attendance_tickets, class_name: "Attendance::Ticket"
+
     has_many :requeriments, primary_key: :cpf, foreign_key: :cpf, class_name: "CoreCandidate::Regularization::Requeriment"
     has_many :schedules,    primary_key: :cpf, foreign_key: :cpf, class_name: "CoreCandidate::Schedule::AgendaSchedule"
     has_many :assessments,  primary_key: :cpf, foreign_key: :cpf, class_name: "CoreCandidate::Protocol::Assessment"
