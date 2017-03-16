@@ -1,4 +1,6 @@
-module Candidate
-  class Asking < ActiveRecord::Base
+module CoreCandidate
+  class Asking < ApplicationRecord
+    self.table_name = 'extranet.candidate_askings'
+
   end
 end

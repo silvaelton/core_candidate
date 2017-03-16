@@ -1,13 +1,14 @@
-module Candidate
-  class CadastreProcedural < ActiveRecord::Base
+module CoreCandidate
+  class CadastreProcedural < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_cadastre_procedurals'
+
     belongs_to :procedural_status
     belongs_to :convocation
     belongs_to :cadastre
-    belongs_to :assessment, class_name: "Protocol::Assessment"
-    belongs_to :old_assessment, class_name: "Protocol::Assessment", foreign_key: 'old_process', primary_key: "document_number"
+    belongs_to :assessment, class_name: "CoreCandidate::Protocol::Assessment"
+    belongs_to :old_assessment, class_name: "CoreCandidate::Protocol::Assessment", foreign_key: 'old_process', primary_key: "document_number"
     validates :observation, :old_process, :procedural_status_id, presence: true
-    #validate  :situation_uniq
-
 
     before_validation :validate_process
 
@@ -15,21 +16,6 @@ module Candidate
 
     def current_status_procedural
         self.procedural_status.name rescue nil
-    end
-
-    def self.create_procedural(mirror_id, cadastre_id, procedural_status,convocation,assessment, process, staff,observation,transfer_process,transfer_assessment_id)
-         @cadastre_procedurals = Candidate::CadastreProcedural.new
-         @cadastre_procedurals.cadastre_mirror_id = mirror_id
-         @cadastre_procedurals.cadastre_id = cadastre_id
-         @cadastre_procedurals.procedural_status_id = procedural_status
-         @cadastre_procedurals.convocation_id = convocation
-         @cadastre_procedurals.assessment_id = assessment
-         @cadastre_procedurals.old_process = process
-         @cadastre_procedurals.staff_id = staff
-         @cadastre_procedurals.observation = observation
-         @cadastre_procedurals.observation = transfer_process
-         @cadastre_procedurals.observation = transfer_assessment_id
-         @cadastre_procedurals.save
     end
 
 
@@ -46,8 +32,8 @@ module Candidate
     private
 
     def validate_process
-      assessment = ::Protocol::Assessment.find_by_document_number(self.old_process)
-      
+      assessment = CoreCandidate::Protocol::Assessment.find_by_document_number(self.old_process)
+
       if assessment.present?
         self.assessment_id = assessment.id
       else

@@ -1,5 +1,7 @@
-module Candidate
-  class List < ActiveRecord::Base
+module CoreCandidate
+  class List < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_listss'
 
     extend FriendlyId
     friendly_id :title, use: :slugged
@@ -12,17 +14,14 @@ module Candidate
 
     enum list_type: ['extranet', 'portal']
 
-    validates :title, :list_type, :view_target, presence: true
-    validates :title, uniqueness: true
-
     def program
       Candidate::Program.where(id: self.program_id)
     end
 
     def self.view_targets
-      %w(Candidate::View::GeneralCandidate 
-         Candidate::View::GeneralPontuation 
-         Candidate::Cadastre 
+      %w(Candidate::View::GeneralCandidate
+         Candidate::View::GeneralPontuation
+         Candidate::Cadastre
          Candidate::View::GeneralRegularization)
     end
   end

@@ -1,4 +1,6 @@
-module Candidate
-  class CivilState < ActiveRecord::Base
+module CoreCandidate
+  class CivilState < ApplicationRecord
+    self.table_name = 'extranet.candidate_civil_states'
+
   end
 end
