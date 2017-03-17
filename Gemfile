@@ -1,6 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'core_address', path: 'components/core_address'
+
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem 'core_address', github: 'codhab/core_address'
 
 gemspec
 
