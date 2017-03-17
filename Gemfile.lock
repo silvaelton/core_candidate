@@ -1,15 +1,16 @@
+GIT
+  remote: https://github.com/codhab/core_address.git
+  revision: edf88ce11cec6d913a55fb951612ce427c8d7586
+  specs:
+    core_address (0.1.0)
+      pg
+      rails (~> 5.0.2)
+
 PATH
   remote: .
   specs:
     core_candidate (0.1.0)
       core_address
-      pg
-      rails (~> 5.0.2)
-
-PATH
-  remote: components/core_address
-  specs:
-    core_address (0.1.0)
       pg
       rails (~> 5.0.2)
 
