@@ -1,8 +1,7 @@
-module Candidate
-  class OccurrenceSituation < ActiveRecord::Base
-    
-    validates :name, presence: true
-    validates :label_portal, presence: true, if: :is_visible_portal?
+module CoreCandidate
+  class OccurrenceSituation < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_occurrence_situations'
 
     private
 

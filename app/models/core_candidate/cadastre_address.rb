@@ -1,15 +1,17 @@
-module Candidate
-  class CadastreAddress < ActiveRecord::Base
-    belongs_to :unit, class_name: "Address::Unit"
+module CoreCandidate
+  class CadastreAddress < ApplicationRecord
+    self.table_name = 'extranet.candidate_cadastre_addresses'
+
+    belongs_to :unit, class_name: "CoreAddress::Unit"
     belongs_to :cadastre
     belongs_to :cadastre_procedural
     belongs_to :regularization_type
-    belongs_to :second_cadastre, class_name: "Candidate::Cadastre", foreign_key: :second_cadastre_id
-    belongs_to :third_cadastre, class_name: "Candidate::Cadastre", primary_key: :id, foreign_key: :third_cadastre_id
-    belongs_to :fourth_cadastre, class_name: "Candidate::Cadastre", primary_key: :id, foreign_key: :fourth_cadastre_id
+    belongs_to :second_cadastre, class_name: "CoreCandidate::Cadastre", foreign_key: :second_cadastre_id
+    belongs_to :third_cadastre, class_name: "CoreCandidate::Cadastre", primary_key: :id, foreign_key: :third_cadastre_id
+    belongs_to :fourth_cadastre, class_name: "CoreCandidate::Cadastre", primary_key: :id, foreign_key: :fourth_cadastre_id
 
 
-    belongs_to :general_pontuation, class_name: "Candidate::View::GeneralPontuation", primary_key: :id, foreign_key: :cadastre_id
+    belongs_to :general_pontuation, class_name: "CoreCandidate::View::GeneralPontuation", primary_key: :id, foreign_key: :cadastre_id
 
     scope :distributed, -> { where(situation_id: 1).order('id DESC')}
 
@@ -36,31 +38,27 @@ module Candidate
     }
 
 
-
-    def current_cadastre_address
-
-    end
-
+    # Assess need
     def self.update_tables_sale(cadastre_id, unit, situation, status, status_unit, firm_user, observation)
-         @cadastre_procedural = Candidate::CadastreProcedural.where(cadastre_id: cadastre_id).last
+         @cadastre_procedural = CoreCandidate::CadastreProcedural.where(cadastre_id: cadastre_id).last
 
-         Candidate::CadastreProcedural.create_procedural(nil,@cadastre_procedural.cadastre_id,procedural,@cadastre_procedural.convocation_id,@cadastre_procedural.assessment_id,
+         CoreCandidate::CadastreProcedural.create_procedural(nil,@cadastre_procedural.cadastre_id,procedural,@cadastre_procedural.convocation_id,@cadastre_procedural.assessment_id,
             @cadastre_procedural.old_process,observation,@cadastre_procedural.transfer_process, @cadastre_procedural.transfer_assessment_id)
 
           if situation == 7
-            Candidate::CadastreSituation.create_status(nil, @cadastre_procedural.cadastre_id, 7)
+            CoreCandidate::CadastreSituation.create_status(nil, @cadastre_procedural.cadastre_id, 7)
           end
 
-          @firms = Candidate::EnterpriseCadastre.where(cadastre_id: cadastre_id).last
-          Candidate::EnterpriseCadastre.create_enterprise_cadastre_situation(mirror_id, cadastre_id, @firms.id,status,observation,firm_user)
+          @firms = CoreCandidate::EnterpriseCadastre.where(cadastre_id: cadastre_id).last
+          CoreCandidate::EnterpriseCadastre.create_enterprise_cadastre_situation(mirror_id, cadastre_id, @firms.id,status,observation,firm_user)
 
-          @unit = Address::Unit.find(unit)
+          @unit = CoreAddress::Unit.find(unit)
           @unit.update(situation_unit_id: status_unit)
 
     end
 
     def self.get_dominial_chain(unit, cadastre)
-      @cadastre_address = Candidate::CadastreAddress.where('unit_id = ? AND cadastre_id <> ?', unit, cadastre).last
+      @cadastre_address = CoreCandidate::CadastreAddress.where('unit_id = ? AND cadastre_id <> ?', unit, cadastre).last
 
       if @cadastre_address.present?
            @cadastre_address.dominial_chain.to_i + 1
@@ -68,11 +66,6 @@ module Candidate
              0
       end
     end
-
-
-
-
-
 
   end
 end

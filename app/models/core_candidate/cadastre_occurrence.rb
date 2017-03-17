@@ -1,18 +1,15 @@
-module Candidate
-  class CadastreOccurrence < ActiveRecord::Base
+module CoreCandidate
+  class CadastreOccurrence < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_cadastre_occurrences'
+
     belongs_to :occurrence_situation
     belongs_to :validation
     belongs_to :cadastre
 
 
-    #validates :feedback_observation, presence: true, on: :update
-
     scope :solved, ->     { where(solved: true) }
     scope :not_solved, -> { where(solved: false) }
-
-    scope :by_name, -> (name) {joins(:cadastre).where("candidate_cadastres.name ilike '%#{name}%'")}
-    scope :by_cpf, -> (cpf) {joins(:cadastre).where("candidate_cadastres.cpf = ?", cpf.unformat_cpf)}
-    scope :by_status, -> (status) { where(solved: status)}
 
     def view_occurrence
       if self.validation.retorno_query?

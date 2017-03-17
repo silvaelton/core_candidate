@@ -1,18 +1,19 @@
-module Candidate
-  class Verification < ActiveRecord::Base
+module CoreCandidate
+  class Verification < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_verifications'
+
     belongs_to :program
 
     scope :morar_bem, -> {where(code: 'morar_bem', publish: true).order(:name)}
 
-    validates :name, :code, :description, :text_valid, :text_invalid, presence: true
-    
     enum verification_type: ['sql', 'serviço']
 
 
     def mirror_verificate(mirror)
       if self.sql?
         # => verificação por SQL
-        Candidate::Verification.find_by_sql("#{self.sql}").present? 
+        Candidate::Verification.find_by_sql("#{self.sql}").present?
       else
         service_string = self.service.split('|')
 

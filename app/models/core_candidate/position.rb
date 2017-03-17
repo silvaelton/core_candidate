@@ -1,5 +1,8 @@
-module Candidate
-  class Position < ActiveRecord::Base
+module CoreCandidate
+  class Position < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_positions'
+
     belongs_to :cadastre
     belongs_to :pontuation
     belongs_to :program

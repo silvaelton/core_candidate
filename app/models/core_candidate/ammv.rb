@@ -1,8 +1,9 @@
-module Candidate
-  class Ammv < ActiveRecord::Base
-    
+module CoreCandidate
+  class Ammv < ApplicationRecord
+    self.table_name = 'extranet.candidate_ammvs'
+
     def cadastre_exists?
-      Candidate::Cadastre.find_by_cpf(self.cpf) rescue nil
+      CoreCandidate::Cadastre.find_by_cpf(self.cpf) rescue nil
     end
   end
 end

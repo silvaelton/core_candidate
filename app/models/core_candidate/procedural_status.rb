@@ -1,8 +1,7 @@
-module Candidate
-  class ProceduralStatus < ActiveRecord::Base
+module CoreCandidate
+  class ProceduralStatus < ApplicationRecord
 
-    validates :name, presence: true, uniqueness: true
-    validates :code, uniqueness: true
+    self.table_name = 'extranet.candidate_procedural_statuses'
 
   end
 end

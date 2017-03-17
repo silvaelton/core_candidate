@@ -1,4 +1,7 @@
-module Candidate
-  class OccurrenceType < ActiveRecord::Base
+module CoreCandidate
+  class OccurrenceType < ApplicationRecord
+
+    self.table_name = 'extranet.candidate_occurrence_types'
+    
   end
 end
