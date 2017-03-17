@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/codhab/core_address.git
-  revision: edf88ce11cec6d913a55fb951612ce427c8d7586
+  revision: 75bd5cf7418ee0dc9917acce65730463c5a1d874
   specs:
     core_address (0.1.0)
       pg
